@@ -1,0 +1,80 @@
+{% extends 'menu/base.html' %} {% block body %}
+<div class="max-w-2xl mx-auto p-8">
+  <div
+    class="bg-white rounded-3xl shadow-xl p-8 hover:shadow-2xl transition-all duration-500"
+  >
+    <h2
+      class="text-3xl font-extrabold text-gray-800 mb-6 border-b-4 border-blue-600 inline-block pb-2"
+    >
+      افزودن / ویرایش آیتم 🍽️
+    </h2>
+
+    <form method="POST" class="space-y-6">
+      {% csrf_token %}
+
+      <div>
+        <label for="id_item_name" class="block text-gray-700 font-semibold mb-2"
+          >نام غذا</label
+        >
+        <input
+          type="text"
+          name="item_name"
+          id="id_item_name"
+          value="{{ form.item_name.value|default:'' }}"
+          class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm transition-all"
+        />
+      </div>
+
+      <div>
+        <label for="id_item_desc" class="block text-gray-700 font-semibold mb-2"
+          >توضیحات</label
+        >
+        <textarea
+          name="item_desc"
+          id="id_item_desc"
+          class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm transition-all"
+        >
+{{ form.item_desc.value|default:'' }}</textarea
+        >
+      </div>
+
+      <div>
+        <label
+          for="id_item_price"
+          class="block text-gray-700 font-semibold mb-2"
+          >قیمت (تومان)</label
+        >
+        <input
+          type="number"
+          name="item_price"
+          id="id_item_price"
+          value="{{ form.item_price.value|default:'' }}"
+          class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm transition-all"
+        />
+      </div>
+
+      <div>
+        <label
+          for="id_item_image"
+          class="block text-gray-700 font-semibold mb-2"
+          >آدرس تصویر</label
+        >
+        <input
+          type="text"
+          name="item_image"
+          id="id_item_image"
+          value="{{ form.item_image.value|default:'' }}"
+          class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm transition-all"
+        />
+      </div>
+
+      <button
+        type="submit"
+        class="w-full bg-blue-600 text-white font-bold py-3 rounded-full hover:bg-blue-500 active:scale-95 transition-all shadow-md"
+      >
+        💾 ذخیره
+      </button>
+    </form>
+  </div>
+</div>
+{% endblock %}

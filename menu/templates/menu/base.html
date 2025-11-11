@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>اپلیکیشن منو</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <body class="bg-gray-50 font-sans">
+    <!-- نوار بالایی -->
+    <nav class="bg-blue-600 text-white">
+      <div class="flex justify-between items-center px-6 py-4">
+        <a href="#" class="font-extrabold text-2xl">اپلیکیشن غذا</a>
+        <div class="space-x-6 flex">
+          <a href="#" class="hover:text-yellow-300 transition-colors"
+            >تماس با ما</a
+          >
+          <a href="#" class="hover:text-yellow-300 transition-colors">آدرس</a>
+          <a href="#" class="hover:text-yellow-300 transition-colors"
+            >درباره ما</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <!-- محتوای اصلی -->
+    <main class="p-6">{% block body %} {% endblock %}</main>
+  </body>
+</html>
