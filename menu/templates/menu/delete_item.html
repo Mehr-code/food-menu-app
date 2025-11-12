@@ -1,0 +1,43 @@
+{% extends 'menu/base.html' %} {% block body %}
+<div class="max-w-md mx-auto p-8">
+  <div
+    class="bg-white rounded-3xl shadow-xl p-8 text-center hover:shadow-2xl transition-all duration-500"
+  >
+    <svg
+      class="mx-auto mb-6 w-16 h-16 text-red-600"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M6 18L18 6M6 6l12 12"
+      />
+    </svg>
+
+    <h2 class="text-2xl font-extrabold text-gray-800 mb-4">
+      آیا واقعا می‌خواهید
+      <span class="text-red-600">{{ item.item_name }}</span> را حذف کنید؟
+    </h2>
+    <p class="text-gray-600 mb-6">این عملیات قابل بازگشت نیست. 😢</p>
+
+    <form method="POST" class="flex justify-center gap-4">
+      {% csrf_token %}
+      <button
+        type="submit"
+        class="flex items-center justify-center gap-2 bg-red-600 text-white px-6 py-2 rounded-full hover:bg-red-500 transition-all shadow-md font-medium"
+      >
+        🗑️ حذف
+      </button>
+      <a
+        href="{% url 'menu:index' %}"
+        class="flex items-center justify-center gap-2 bg-gray-300 text-gray-800 px-6 py-2 rounded-full hover:bg-gray-200 transition-all shadow-md font-medium"
+      >
+        ❌ لغو
+      </a>
+    </form>
+  </div>
+</div>
+{% endblock %}

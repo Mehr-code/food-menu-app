@@ -1,40 +1,53 @@
 {% extends 'menu/base.html' %} {% block body %}
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 p-8">
-  {% for item in item_list %}
-  <div
-    class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-3xl shadow-xl overflow-hidden hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-400"
-  >
-    <div class="relative">
-      <img
-        src="{{ item.item_image }}"
-        alt="{{ item.item_name }}"
-        class="w-full h-56 object-cover rounded-t-3xl"
-      />
-      <span
-        class="absolute top-3 left-3 bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-md"
-      >
-        {{ item.item_price }} تومان
-      </span>
-    </div>
-    <div class="p-5 flex flex-col justify-between h-56">
-      <div>
-        <h3
-          class="text-2xl font-extrabold text-gray-800 mb-3 hover:text-blue-600 transition-colors"
-        >
-          {{ item.item_name }}
-        </h3>
-        <p class="text-gray-600 text-sm mb-4 line-clamp-4">
-          {{ item.item_desc }}
-        </p>
-      </div>
-      <a
-        href="{% url 'menu:detail' item.id %}"
-        class="self-start bg-blue-600 text-white px-5 py-2 rounded-full hover:bg-blue-500 transition-all shadow-lg font-medium text-sm"
-      >
-        جزئیات
-      </a>
-    </div>
+<div class="max-w-7xl mx-auto p-8">
+  <!-- دکمه ایجاد آیتم جدید -->
+  <div class="flex justify-start mb-6">
+    <a
+      href="{% url 'menu:create_item' %}"
+      class="flex items-center gap-2 bg-green-600 text-white px-6 py-3 rounded-full hover:bg-green-500 shadow-lg font-bold transition-all"
+    >
+      ➕ ایجاد آیتم جدید
+    </a>
   </div>
-  {% endfor %}
+
+  <!-- گرید آیتم‌ها -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+    {% for item in item_list %}
+    <div
+      class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-3xl shadow-xl overflow-hidden hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-400"
+    >
+      <div class="relative">
+        <img
+          src="{{ item.item_image }}"
+          alt="{{ item.item_name }}"
+          class="w-full h-56 object-cover rounded-t-3xl"
+        />
+        <span
+          class="absolute top-3 left-3 bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-md"
+        >
+          {{ item.item_price }} تومان
+        </span>
+      </div>
+      <div class="p-5 flex flex-col justify-between h-56">
+        <div>
+          <h3
+            class="text-2xl font-extrabold text-gray-800 mb-3 hover:text-blue-600 transition-colors"
+          >
+            {{ item.item_name }}
+          </h3>
+          <p class="text-gray-600 text-sm mb-4 line-clamp-4">
+            {{ item.item_desc }}
+          </p>
+        </div>
+        <a
+          href="{% url 'menu:detail' item.id %}"
+          class="self-start bg-blue-600 text-white px-5 py-2 rounded-full hover:bg-blue-500 transition-all shadow-lg font-medium text-sm"
+        >
+          جزئیات
+        </a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
 </div>
 {% endblock %}
