@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>خروج از حساب</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <body
+    class="bg-gray-50 font-sans flex items-center justify-center min-h-screen"
+  >
+    <div
+      class="bg-white rounded-3xl shadow-xl p-10 max-w-md text-center hover:shadow-2xl transition-all duration-500"
+    >
+      <!-- ایموجی بامزه -->
+      <div class="text-6xl mb-4 animate-bounce">👋</div>
+
+      <!-- پیام -->
+      <h1 class="text-2xl font-extrabold mb-4 text-gray-800">
+        اوه! شما لاگ‌اوت شدید 😎
+      </h1>
+
+      <p class="text-gray-600 mb-6">
+        نگران نباش، دوباره می‌تونی وارد بشی و به ما بپیوندی! 🚀
+      </p>
+
+      <!-- دکمه ورود دوباره -->
+      <a
+        href="{% url 'users:login' %}"
+        class="inline-block bg-blue-600 text-white font-bold py-3 px-6 rounded-full hover:bg-blue-500 active:scale-95 transition-all shadow-md"
+      >
+        🔑 ورود دوباره
+      </a>
+
+      <!-- پیام کوچک بامزه پایین -->
+      <p class="text-gray-400 mt-6 text-sm">
+        یا می‌تونی کمی استراحت کنی و بعد دوباره برگردی! 😴
+      </p>
+    </div>
+  </body>
+</html>

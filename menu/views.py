@@ -22,14 +22,14 @@ def create_item(req):
 
     if req.method == "POST":
         if form.is_valid():
+            print("residam")
             form.save()
             return redirect("menu:index")
+        else:
+            print(form.errors)
 
-    if req.method == "GET":
-        context = {"form": form}
-        return render(req, "menu/item-form.html", context)
-
-    return req
+    context = {"form": form}
+    return render(req, "menu/item-form.html", context)
 
 
 def update_item(req, id):

@@ -62,14 +62,33 @@
           class="block text-gray-700 font-semibold mb-2"
           >آدرس تصویر</label
         >
-        <input
-          type="text"
-          name="item_image"
-          id="id_item_image"
-          value="{{ form.item_image.value|default:'' }}"
-          class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm transition-all"
-          required
-        />
+        <div class="flex items-center space-x-2 rtl:space-x-reverse">
+          <input
+            type="text"
+            name="item_image"
+            id="id_item_image"
+            value="{{ form.item_image.value|default:'' }}"
+            class="flex-1 border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm transition-all"
+            placeholder="لینک تصویر را وارد کنید"
+            required
+          />
+          <button
+            type="button"
+            id="preview-btn"
+            class="bg-blue-600 text-white px-4 py-2 rounded-xl hover:bg-blue-500 transition-all shadow-md"
+          >
+            🔍 نمایش
+          </button>
+        </div>
+
+        <!-- جایی که تصویر لود می‌شه -->
+        <div class="mt-4">
+          <img
+            id="image-preview"
+            class="max-w-full rounded-xl shadow-md hidden"
+            alt="پیش‌نمایش تصویر"
+          />
+        </div>
       </div>
 
       <button
@@ -81,4 +100,24 @@
     </form>
   </div>
 </div>
+<script>
+  const previewBtn = document.getElementById("preview-btn");
+  const imageInput = document.getElementById("id_item_image");
+  const imagePreview = document.getElementById("image-preview");
+
+  previewBtn.addEventListener("click", () => {
+    const url = imageInput.value.trim();
+    if (!url) return;
+
+    // تغییر src و نمایش عکس
+    imagePreview.src = url;
+    imagePreview.classList.remove("hidden");
+
+    // اگر عکس لود نشد، یک پیام خطا ساده نمایش بده
+    imagePreview.onerror = () => {
+      alert("این لینک تصویر معتبر نیست یا نمی‌تواند لود شود 😅");
+      imagePreview.classList.add("hidden");
+    };
+  });
+</script>
 {% endblock %}
