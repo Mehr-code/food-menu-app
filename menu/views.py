@@ -2,18 +2,38 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Item
 from .forms import ItemForm
+from django.contrib.auth.decorators import login_required
+from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView
+from django.utils.decorators import method_decorator
 
 
-def index(req):
-    item_list = Item.objects.all()
-    context = {"item_list": item_list}
-    return render(req, "menu/index.html", context)
+# @login_required
+# def index(req):
+#     item_list = Item.objects.all()
+#     context = {"item_list": item_list}
+#     return render(req, "menu/index.html", context)
+
+
+@method_decorator(login_required, name="dispatch")
+class IndexClassView(ListView):
+    model = Item
+    template_name = "menu/index.html"
+    context_object_name = "item_list"
 
 
 def detail(req, id):
     item = Item.objects.get(id=id)
     context = {"item": item}
     return render(req, "menu/detail.html", context)
+
+
+@method_decorator(login_required, name="dispatch")
+class DetailClassView(DetailView):
+    model = Item
+    template_name = "menu/detail.html"
+    context_object_name = "item"
 
 
 def create_item(req):
@@ -30,6 +50,12 @@ def create_item(req):
 
     context = {"form": form}
     return render(req, "menu/item-form.html", context)
+
+
+class ItemCreateView(CreateView):
+    model = Item
+    fields = ["item_name", "item_desc", "item_price", "item_image"]
+    template_name = "menu/item-form.html"
 
 
 def update_item(req, id):

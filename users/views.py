@@ -3,6 +3,7 @@ from django.contrib import messages
 from .forms import RegisterForm
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import logout, login
+from django.contrib.auth.decorators import login_required
 
 
 def register(req):
@@ -41,3 +42,8 @@ def logout_view(req):
 
 def logout_page(req):
     return render(req, "users/logout.html")
+
+
+@login_required
+def profile(req):
+    return render(req, "users/profile.html")

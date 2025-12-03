@@ -8,103 +8,115 @@
   </head>
   <body class="bg-gray-50 font-sans">
     <!-- نوار بالایی -->
-    <nav class="bg-blue-600 text-white">
+    <nav
+      class="bg-gradient-to-l from-blue-700 to-blue-500 text-white shadow-md backdrop-blur-xl"
+      id="nav-bar"
+    >
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center h-16 justify-between">
-          <!-- لوگو و دکمه همبرگر سمت راست -->
-          <div
-            class="flex items-center space-x-4 rtl:space-x-reverse ml-auto lg:ml-0"
-          >
-            <div class="flex lg:hidden ml-5">
-              <button id="menu-btn" class="text-white focus:outline-none">
-                <svg
-                  class="w-6 h-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                </svg>
-              </button>
-            </div>
-            <a href="{% url 'menu:index' %}" class="font-extrabold text-2xl"
-              >اپلیکیشن غذا</a
+          <!-- لوگو + دکمه موبایل -->
+          <div class="flex items-center gap-4 ml-auto lg:ml-0">
+            <button
+              id="menu-btn"
+              class="lg:hidden text-white hover:scale-110 transition"
             >
+              <svg
+                class="w-7 h-7"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </button>
+
+            <a
+              href="{% url 'menu:index' %}"
+              class="text-2xl font-extrabold tracking-tight hover:text-yellow-300 transition"
+            >
+              🍽️ اپلیکیشن غذا
+            </a>
           </div>
-          <!-- لینک‌ها دسکتاپ سمت چپ -->
-          <div class="hidden lg:flex space-x-6">
+
+          <!-- لینک‌های نسخه دسکتاپ -->
+          <div class="hidden lg:flex items-center gap-8 text-lg font-medium">
             {% if user.is_authenticated %}
             <a
+              href="{% url 'users:profile' %}"
+              class="text-yellow-200 font-semibold hover:text-yellow-300 transition"
+            >
+              خوش آمدید {{ user.username }} جان ✨
+            </a>
+
+            <a
               href="{% url 'users:logout' %}"
-              class="hover:text-yellow-300 transition-colors"
-              >خروج از حساب کاربری</a
+              class="hover:text-yellow-300 transition"
+              >خروج</a
             >
             {% else %}
-            <p>
-              <a
-                href="{% url 'users:login' %}"
-                class="hover:text-yellow-300 transition-colors"
-                >وارد شوید</a
-              >/
-              <a
-                href="{% url 'users:register' %}"
-                class="hover:text-yellow-300 transition-colors"
-                >ثبت نام کنید</a
-              >
-            </p>
+            <a
+              href="{% url 'users:login' %}"
+              class="hover:text-yellow-300 transition"
+              >ورود</a
+            >
+            <span>/</span>
+            <a
+              href="{% url 'users:register' %}"
+              class="hover:text-yellow-300 transition"
+              >ثبت نام</a
+            >
             {% endif %}
-            <a href="#" class="hover:text-yellow-300 transition-colors"
-              >تماس با ما</a
-            >
-            <a href="#" class="hover:text-yellow-300 transition-colors">آدرس</a>
-            <a href="#" class="hover:text-yellow-300 transition-colors"
-              >درباره ما</a
-            >
+
+            <a href="#" class="hover:text-yellow-300 transition">تماس با ما</a>
+            <a href="#" class="hover:text-yellow-300 transition">آدرس</a>
+            <a href="#" class="hover:text-yellow-300 transition">درباره ما</a>
           </div>
         </div>
 
         <!-- منوی موبایل -->
         <div
           id="mobile-menu"
-          class="hidden lg:hidden mt-2 flex flex-col space-y-4 px-2 text-right py-5"
+          class="hidden lg:hidden mt-4 flex flex-col space-y-4 px-3 py-4 backdrop-blur-xl bg-blue-600/40 rounded-2xl border border-blue-300/20"
         >
           {% if user.is_authenticated %}
           <a
+            href="{% url 'users:profile' %}"
+            class="text-yellow-200 font-semibold hover:text-yellow-300 transition"
+          >
+            خوش آمدید {{ user.username }} جان ✨
+          </a>
+
+          <a
             href="{% url 'users:logout' %}"
-            class="hover:text-yellow-300 transition-colors"
-            >خروج از حساب کاربری</a
+            class="hover:text-yellow-300 transition"
+            >خروج</a
           >
           {% else %}
-          <p>
-            <a
-              href="{% url 'users:login' %}"
-              class="hover:text-yellow-300 transition-colors"
-              >وارد شوید</a
-            >/
-            <a
-              href="{% url 'users:register' %}"
-              class="hover:text-yellow-300 transition-colors"
-              >ثبت نام کنید</a
-            >
-          </p>
+          <a
+            href="{% url 'users:login' %}"
+            class="hover:text-yellow-300 transition"
+            >ورود</a
+          >
+          <a
+            href="{% url 'users:register' %}"
+            class="hover:text-yellow-300 transition"
+            >ثبت نام</a
+          >
           {% endif %}
 
-          <a href="#" class="hover:text-yellow-300 transition-colors"
-            >تماس با ما</a
-          >
-          <a href="#" class="hover:text-yellow-300 transition-colors">آدرس</a>
-          <a href="#" class="hover:text-yellow-300 transition-colors"
-            >درباره ما</a
-          >
+          <a href="#" class="hover:text-yellow-300 transition">تماس با ما</a>
+          <a href="#" class="hover:text-yellow-300 transition">آدرس</a>
+          <a href="#" class="hover:text-yellow-300 transition">درباره ما</a>
         </div>
       </div>
     </nav>
 
+    <!-- پیام‌های فِلَش -->
     {% if messages %}
     <div class="max-w-3xl mx-auto mt-6 space-y-3 px-4">
       {% for message in messages %}
@@ -113,7 +125,6 @@
       >
         {{ message }}
       </div>
-
       {% endfor %}
     </div>
     {% endif %}
@@ -121,13 +132,16 @@
     <!-- محتوای اصلی -->
     <main class="p-6">{% block body %} {% endblock %}</main>
   </body>
+
   <script>
     const btn = document.getElementById("menu-btn");
     const menu = document.getElementById("mobile-menu");
+    const navBar = document.getElementById("nav-bar");
     const flashMessages = document.querySelectorAll(".flash-msg");
 
     btn.addEventListener("click", () => {
       menu.classList.toggle("hidden");
+      navBar.classList.toggle("pb-6");
     });
 
     flashMessages.forEach((msg) => {
