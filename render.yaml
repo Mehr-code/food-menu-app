@@ -1,6 +1,6 @@
 services:
   - type: web
     name: food-menu-app
-    env: python
-    buildCommand: "./build.sh"
-    startCommand: "gunicorn core.wsgi:application"
+    runtime: python
+    buildCommand: bash build.sh
+    startCommand: gunicorn core.wsgi:application
