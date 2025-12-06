@@ -5,8 +5,9 @@ from .forms import ItemForm
 from django.contrib.auth.decorators import login_required
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.utils.decorators import method_decorator
+from django.urls import reverse_lazy
 
 
 # @login_required
@@ -57,21 +58,37 @@ class ItemCreateView(CreateView):
     fields = ["item_name", "item_desc", "item_price", "item_image"]
     template_name = "menu/item-form.html"
 
-
-def update_item(req, id):
-    item = Item.objects.get(id=id)
-    form = ItemForm(req.POST or None, instance=item)
-    if form.is_valid():
-        form.save()
-        return redirect("menu:index")
-    context = {"form": form}
-    return render(req, "menu/item-form.html", context)
+    def form_valid(self, form):
+        form.instance.user_name = self.request.user
+        return super().form_valid(form)
 
 
-def delete_item(req, id):
+# def update_item(req, id):
+#     item = Item.objects.get(id=id)
+#     form = ItemForm(req.POST or None, instance=item)
+#     if form.is_valid():
+#         form.save()
+#         return redirect("menu:index")
+#     context = {"form": form}
+#     return render(req, "menu/item-form.html", context)
 
-    item = Item.objects.get(id=id)
-    if req.method == "POST":
-        item.delete()
-        return redirect("menu:index")
-    return render(req, "menu/delete_item.html")
+
+class UpdateClassView(UpdateView):
+    model = Item
+    fields = ["item_name", "item_desc", "item_price", "item_image"]
+    template_name = "menu/item-form.html"
+
+
+# def delete_item(req, id):
+
+#     item = Item.objects.get(id=id)
+#     if req.method == "POST":
+#         item.delete()
+#         return redirect("menu:index")
+#     return render(req, "menu/delete_item.html")
+
+
+class DeleteClassView(DeleteView):
+    model = Item
+    template_name = "menu/delete_item.html"
+    success_url = reverse_lazy("menu:index")

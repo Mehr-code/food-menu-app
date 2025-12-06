@@ -6,10 +6,38 @@
     <title>ثبت نام</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   </head>
+  <style>
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(-5px) scale(0.95);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    .animate-fadeIn {
+      animation: fadeIn 0.3s ease forwards;
+    }
+  </style>
+
   <body>
     <div
       class="min-h-screen flex items-center justify-center bg-gray-100 py-12 px-4"
     >
+      {% if form.non_field_errors %}
+      <div class="w-full flex flex-col items-center gap-2 mb-4">
+        {% for error in form.non_field_errors %}
+        <div
+          class="flash-msg p-4 rounded-xl bg-red-50 text-red-700 border border-red-200 shadow-md w-full max-w-md text-center"
+        >
+          {{ error }}
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
       <div
         class="max-w-md w-full bg-white rounded-3xl shadow-xl p-8 hover:shadow-2xl transition-all duration-500"
         dir="rtl"
@@ -37,10 +65,13 @@
               placeholder="نام کاربری خود را وارد کنید"
               class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
               value="{{ form.username.value|default:'' }}"
-              required
             />
             {% if form.username.errors %}
-            <p class="text-red-600 text-sm mt-1">{{ form.username.errors }}</p>
+            <p
+              class="flash-error p-2 mt-1 rounded-lg bg-red-100 text-red-700 border border-red-300 shadow-md text-sm w-full transition-all duration-500 transform scale-95 animate-fadeIn"
+            >
+              {{ form.username.errors.0 }}
+            </p>
             {% endif %}
           </div>
 
@@ -56,10 +87,13 @@
               placeholder="ایمیل خود را وارد کنید"
               class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
               value="{{ form.email.value|default:'' }}"
-              required
             />
             {% if form.email.errors %}
-            <p class="text-red-600 text-sm mt-1">{{ form.email.errors }}</p>
+            <p
+              class="flash-error p-2 mt-1 rounded-lg bg-red-100 text-red-700 border border-red-300 shadow-md text-sm w-full transition-all duration-500 transform scale-95 animate-fadeIn"
+            >
+              {{ form.email.errors.0 }}
+            </p>
             {% endif %}
           </div>
 
@@ -76,7 +110,6 @@
               id="id_password1"
               placeholder="رمز عبور خود را وارد کنید"
               class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
-              required
             />
             <!-- دکمه نمایش رمز عبور -->
             <button
@@ -87,7 +120,11 @@
               👁️
             </button>
             {% if form.password1.errors %}
-            <p class="text-red-600 text-sm mt-1">{{ form.password1.errors }}</p>
+            <p
+              class="flash-error p-2 mt-1 rounded-lg bg-red-100 text-red-700 border border-red-300 shadow-md text-sm w-full transition-all duration-500 transform scale-95 animate-fadeIn"
+            >
+              {{ form.password1.errors.0 }}
+            </p>
             {% endif %}
           </div>
 
@@ -104,7 +141,6 @@
               id="id_password2"
               placeholder="رمز عبور را دوباره وارد کنید"
               class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
-              required
             />
             <!-- دکمه نمایش رمز عبور -->
             <button
@@ -115,7 +151,11 @@
               👁️
             </button>
             {% if form.password2.errors %}
-            <p class="text-red-600 text-sm mt-1">{{ form.password2.errors }}</p>
+            <p
+              class="flash-error p-2 mt-1 rounded-lg bg-red-100 text-red-700 border border-red-300 shadow-md text-sm w-full transition-all duration-500 transform scale-95 animate-fadeIn"
+            >
+              {{ form.password2.errors.0 }}
+            </p>
             {% endif %}
           </div>
 
@@ -143,6 +183,8 @@
       const passwordInput2 = document.getElementById("id_password2");
       const toggleBtn = document.getElementById("toggle-password1");
       const toggleBtn2 = document.getElementById("toggle-password2");
+      const flashMessages = document.querySelectorAll(".flash-msg");
+      const flashError = document.querySelectorAll(".flash-error");
 
       toggleBtn.addEventListener("click", () => {
         if (passwordInput.type === "password") {
@@ -161,6 +203,22 @@
           passwordInput2.type = "password";
           toggleBtn2.textContent = "👁️";
         }
+      });
+
+      flashMessages.forEach((msg) => {
+        setTimeout(() => {
+          msg.classList.add("opacity-0");
+        }, 3000);
+        setTimeout(() => {
+          msg.remove();
+        }, 6000);
+      });
+
+      flashError.forEach((e) => {
+        setTimeout(() => {
+          e.classList.add("opacity-0", "transition-opacity", "duration-700");
+        }, 3000);
+        setTimeout(() => e.remove(), 3700);
       });
     </script>
   </body>

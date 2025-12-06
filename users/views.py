@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .forms import RegisterForm
+from .forms import RegisterForm, MyLoginForm
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import logout, login
 from django.contrib.auth.decorators import login_required
@@ -17,14 +17,16 @@ def register(req):
                 f"خوش آمدید {username} ! حساب کاربری شما با موفقیت ایجاد شد، لطفا وارد شوید.",
             )
             return redirect("users:login")
+    else:
+        form = RegisterForm()
 
-    form = RegisterForm()
     context = {"form": form}
     return render(req, "users/register.html", context)
 
 
 class MyLoginView(LoginView):
     template_name = "users/login.html"
+    form_class = MyLoginForm
 
     def form_valid(self, form):
         user = form.get_user()

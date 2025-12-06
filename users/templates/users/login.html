@@ -7,22 +7,26 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   </head>
   <body>
-    {% if messages %}
-    <div class="max-w-3xl mx-auto mt-6 space-y-3 px-4">
-      {% for message in messages %}
-      <div
-        class="flash-msg p-4 rounded-xl text-sm font-medium shadow-md border {% if message.tags == 'success' %} bg-green-50 text-green-700 border-green-200 {% elif message.tags == 'error' %} bg-red-50 text-red-700 border-red-200 {% elif message.tags == 'warning' %} bg-yellow-50 text-yellow-700 border-yellow-200 {% else %} bg-blue-50 text-blue-700 border-blue-200 {% endif %}"
-        dir="rtl"
-      >
-        {{ message }}
-      </div>
-
-      {% endfor %}
-    </div>
-    {% endif %}
     <div
-      class="min-h-screen flex items-center justify-center bg-gray-100 py-12 px-4"
+      class="min-h-screen flex flex-col gap-10 items-center justify-center bg-gray-100 py-12 px-4"
     >
+      <!--  -->
+      {% if form.non_field_errors %}
+      <div
+        class="w-full fixed top-0 left-0 z-50 px-4 mt-4 flex flex-col items-center space-y-3"
+      >
+        {% for error in form.non_field_errors %}
+        <div
+          class="flash-msg transform transition-all duration-700 opacity-0 -translate-y-5 p-4 rounded-xl text-sm font-medium shadow-lg border bg-red-100 text-red-700 border-red-300 w-full max-w-md flex items-start gap-3"
+          dir="rtl"
+        >
+          <span class="text-xl">❗</span>
+          <p>{{ error }}</p>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
       <div
         class="max-w-md w-full bg-white rounded-3xl shadow-xl p-8 hover:shadow-2xl transition-all duration-500"
         dir="rtl"
@@ -117,14 +121,22 @@
         }
       });
 
-      flashMessages.forEach((msg) => {
+      flashMessages.forEach((msg, index) => {
+        // ورود با تأخیر ملایم
+        setTimeout(() => {
+          msg.classList.remove("opacity-0", "-translate-y-5");
+          msg.classList.add("opacity-100", "translate-y-0");
+        }, 200 * index);
+
+        // خروج بعد 4 ثانیه
         setTimeout(() => {
           msg.classList.add("opacity-0");
-        }, 3000);
+        }, 4000);
 
+        // حذف کامل بعد 8 ثانیه
         setTimeout(() => {
           msg.remove();
-        }, 3800);
+        }, 6000);
       });
     </script>
   </body>
