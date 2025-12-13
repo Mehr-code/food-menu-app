@@ -43,6 +43,7 @@
 
       <!-- دکمه‌های ویرایش و حذف -->
       <div class="flex gap-4">
+        {% if item.user_name == request.user %}
         <a
           href="{% url 'menu:update_item' item.id %}"
           class="flex items-center justify-center gap-2 bg-green-600 text-white px-5 py-2 rounded-full hover:bg-green-500 transition-all shadow-md font-medium text-sm"
@@ -55,6 +56,18 @@
         >
           🗑️ حذف
         </a>
+        {% else %}
+        <p
+          class="flex items-center justify-center gap-2 bg-gray-600 text-white px-5 py-2 rounded-full shadow-md font-medium text-sm"
+        >
+          ✏️ ویرایش
+        </p>
+        <p
+          class="flex items-center justify-center gap-2 bg-gray-600 text-white px-5 py-2 rounded-full shadow-md font-medium text-sm"
+        >
+          🗑️ حذف
+        </p>
+        {% endif %}
       </div>
     </div>
   </div>

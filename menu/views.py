@@ -78,6 +78,9 @@ class UpdateClassView(UpdateView):
     fields = ["item_name", "item_desc", "item_price", "item_image"]
     template_name = "menu/item-form.html"
 
+    def get_queryset(self):
+        return Item.objects.filter(user_name=self.request.user)
+
 
 # def delete_item(req, id):
 
