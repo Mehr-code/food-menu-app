@@ -17,7 +17,6 @@ from django.urls import reverse_lazy
 #     return render(req, "menu/index.html", context)
 
 
-@method_decorator(login_required, name="dispatch")
 class IndexClassView(ListView):
     model = Item
     template_name = "menu/index.html"
@@ -30,7 +29,6 @@ def detail(req, id):
     return render(req, "menu/detail.html", context)
 
 
-@method_decorator(login_required, name="dispatch")
 class DetailClassView(DetailView):
     model = Item
     template_name = "menu/detail.html"
@@ -53,6 +51,7 @@ def create_item(req):
     return render(req, "menu/item-form.html", context)
 
 
+@method_decorator(login_required, name="dispatch")
 class ItemCreateView(CreateView):
     model = Item
     fields = ["item_name", "item_desc", "item_price", "item_image"]
@@ -73,6 +72,7 @@ class ItemCreateView(CreateView):
 #     return render(req, "menu/item-form.html", context)
 
 
+@method_decorator(login_required, name="dispatch")
 class UpdateClassView(UpdateView):
     model = Item
     fields = ["item_name", "item_desc", "item_price", "item_image"]
@@ -91,6 +91,7 @@ class UpdateClassView(UpdateView):
 #     return render(req, "menu/delete_item.html")
 
 
+@method_decorator(login_required, name="dispatch")
 class DeleteClassView(DeleteView):
     model = Item
     template_name = "menu/delete_item.html"
