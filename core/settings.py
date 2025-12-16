@@ -30,7 +30,11 @@ SECRET_KEY = "django-insecure-ab&poeqvqz%3*q=o8b!f^8u691^@0t64c%weio$l(aop$w0t7w
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["https://food-menu-app-7wy3.onrender.com", "localhost", "127.0.0.1"]
+ALLOWED_HOSTS = [
+    "food-menu-app-7wy3.onrender.com",
+    "localhost",
+    "127.0.0.1",
+]
 
 
 # Application definition
