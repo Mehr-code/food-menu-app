@@ -8,19 +8,27 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.utils.decorators import method_decorator
 from django.urls import reverse_lazy
+from django.core.paginator import Paginator
+from django.views.decorators.cache import cache_page
 
 
-# @login_required
-# def index(req):
-#     item_list = Item.objects.all()
-#     context = {"item_list": item_list}
-#     return render(req, "menu/index.html", context)
+@login_required
+def index(req):
+    item_list = Item.objects.all()
+    paginator = Paginator(item_list, 4)
+    page_number = req.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+    context = {"item_list": page_obj}
+    return render(req, "menu/index.html", context)
 
 
+@method_decorator(cache_page(60 * 5), name="dispatch")
 class IndexClassView(ListView):
     model = Item
     template_name = "menu/index.html"
     context_object_name = "item_list"
+    paginate_by = 4
+    ordering = ["-created_at"]
 
 
 def detail(req, id):

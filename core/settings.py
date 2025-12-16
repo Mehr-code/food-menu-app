@@ -30,7 +30,7 @@ SECRET_KEY = "django-insecure-ab&poeqvqz%3*q=o8b!f^8u691^@0t64c%weio$l(aop$w0t7w
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["https://food-menu-app-7wy3.onrender.com", "localhost", "127.0.0.1"]
 
 
 # Application definition
@@ -48,6 +48,9 @@ INSTALLED_APPS = [
 
 
 MIDDLEWARE = [
+    "menu.middleware.BlockIPMiddleware",
+    "menu.middleware.LogRequestMiddleware",
+    "menu.middleware.TimerMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -144,6 +147,28 @@ LOGIN_URL = "users:login"
 MEDIA_ROOT = os.path.join(BASE_DIR, "pictures")
 
 MEDIA_URL = "/pictures/"
+
+if os.environ.get("RENDER") or os.environ.get("PRODUCTION"):
+    # Production uses Redis on Render
+    CACHES = {
+        "default": {
+            "BACKEND": "django_redis.cache.RedisCache",
+            "LOCATION": os.environ.get("REDIS_URL"),
+            "OPTIONS": {
+                "CLIENT_CLASS": "django_redis.client.DefaultClient",
+                "SSL_CERT_REQS": None,  # برای Upstash گاهی لازمه
+            },
+        }
+    }
+else:
+    # Local
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
+            "LOCATION": BASE_DIR / "cache",
+        }
+    }
+
 
 # These Lines Belew Is For Production
 STATIC_ROOT = BASE_DIR / "staticfiles"
