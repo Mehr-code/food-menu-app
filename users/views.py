@@ -4,6 +4,9 @@ from .forms import RegisterForm, MyLoginForm
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import logout, login
 from django.contrib.auth.decorators import login_required
+from django.views.generic.edit import UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from .models import Profile
 
 
 def register(req):
@@ -49,3 +52,13 @@ def logout_page(req):
 @login_required
 def profile(req):
     return render(req, "users/profile.html")
+
+
+class ProfileUpdateView(UpdateView, LoginRequiredMixin):
+    model = Profile
+    fields = ["image", "location"]
+    template_name = "users/profile_edit.html"
+
+    def get_object(self):
+        profile, created = Profile.objects.get_or_create(user=self.request.user)
+        return profile

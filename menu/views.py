@@ -10,6 +10,7 @@ from django.utils.decorators import method_decorator
 from django.urls import reverse_lazy
 from django.core.paginator import Paginator
 from django.views.decorators.cache import cache_page
+from django.views.decorators.vary import vary_on_headers
 
 
 @login_required
@@ -23,6 +24,7 @@ def index(req):
 
 
 @method_decorator(cache_page(60 * 5), name="dispatch")
+@method_decorator(vary_on_headers("User-Agent"), name="dispatch")
 class IndexClassView(ListView):
     model = Item
     template_name = "menu/index.html"

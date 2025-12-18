@@ -1,2 +1,78 @@
-<h1>{{user.username}}</h1>
-<img src="{{user.profile.image.url}}" alt="" />
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>پروفایل کاربر</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+
+  <body>
+    <div
+      class="min-h-screen flex flex-col items-center justify-center bg-gray-100 py-12 px-4"
+    >
+      <!-- کارت پروفایل -->
+      <div
+        class="relative max-w-md w-full bg-white rounded-3xl shadow-xl p-8 hover:shadow-2xl transition-all duration-500 text-center"
+      >
+        <!-- Back button -->
+        <a
+          href="{% url 'menu:index' %}"
+          class="absolute top-6 right-6 text-gray-500 hover:text-gray-800 transition text-sm flex items-center gap-1"
+        >
+          <span class="text-lg">←</span>
+          بازگشت
+        </a>
+
+        <!-- تصویر پروفایل -->
+        <div class="flex justify-center -mt-24 mb-4">
+          <img
+            src="{{ user.profile.image.url }}"
+            alt="profile image"
+            class="w-40 h-40 rounded-full object-cover border-4 border-white shadow-lg bg-gray-100"
+          />
+        </div>
+
+        <!-- نام کاربری -->
+        <h1
+          class="text-3xl font-extrabold text-gray-800 mb-2 border-b-4 border-blue-600 inline-block pb-2"
+        >
+          {{ user.username }}
+        </h1>
+
+        <!-- موقعیت -->
+        <p class="mt-3 text-gray-600 flex items-center justify-center gap-2">
+          <span class="text-lg">📍</span>
+          {{ user.profile.location }}
+        </p>
+
+        <!-- جداکننده -->
+        <div class="my-6 h-px bg-gray-200"></div>
+
+        <!-- توضیح کوتاه (اختیاری) -->
+        <p class="text-gray-600 text-sm leading-relaxed">
+          برنامه‌نویس و علاقه‌مند به تکنولوژی
+          <br />
+          در مسیر یادگیری عمیق و ساختن چیزهای واقعی 🚀
+        </p>
+
+        <!-- دکمه‌ها -->
+        <div class="mt-8 flex gap-4">
+          <a
+            href="{% url 'users:editProfile' %}"
+            class="flex-1 bg-blue-600 text-white font-bold py-3 rounded-full hover:bg-blue-500 active:scale-95 transition-all shadow-md"
+          >
+            ✏️ ویرایش پروفایل
+          </a>
+
+          <a
+            href="{% url 'users:logout' %}"
+            class="flex-1 border border-gray-300 text-gray-700 font-bold py-3 rounded-full hover:bg-gray-100 active:scale-95 transition-all shadow-sm"
+          >
+            🚪 خروج
+          </a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
