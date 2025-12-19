@@ -5,8 +5,10 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth import logout, login
 from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import UpdateView
+from django.views.generic.detail import DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Profile
+from django.shortcuts import get_object_or_404
 
 
 def register(req):
@@ -54,7 +56,7 @@ def profile(req):
     return render(req, "users/profile.html")
 
 
-class ProfileUpdateView(UpdateView, LoginRequiredMixin):
+class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     model = Profile
     fields = ["image", "location"]
     template_name = "users/profile_edit.html"
@@ -62,3 +64,12 @@ class ProfileUpdateView(UpdateView, LoginRequiredMixin):
     def get_object(self):
         profile, created = Profile.objects.get_or_create(user=self.request.user)
         return profile
+
+
+class ProfileDetailView(DetailView):
+    model = Profile
+    template_name = "users/profile.html"
+    context_object_name = "profile"
+
+    def get_object(self):
+        return get_object_or_404(Profile, user__username=self.kwargs["username"])

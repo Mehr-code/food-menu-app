@@ -12,4 +12,4 @@ class Profile(models.Model):
         return self.user.username
 
     def get_absolute_url(self):
-        return reverse("users:profile")
+        return reverse("users:profile_detail", kwargs={"username": self.user.username})

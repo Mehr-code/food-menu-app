@@ -85,7 +85,7 @@
         >
           {% if user.is_authenticated %}
           <a
-            href="{% url 'users:profile' %}"
+            href="{{ user.profile.get_absolute_url }}"
             class="text-yellow-200 font-semibold hover:text-yellow-300 transition"
           >
             خوش آمدید {{ user.username }} جان ✨

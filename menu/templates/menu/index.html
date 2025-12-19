@@ -1,4 +1,8 @@
-{% extends 'menu/base.html' %} {% block body %}
+{% extends 'menu/base.html' %}
+<!--  -->
+{% load cache %}
+<!--  -->
+{% block body %}
 <div class="max-w-7xl mx-auto p-8">
   <!-- دکمه ایجاد آیتم جدید -->
   <div class="flex justify-start mb-6">
@@ -10,6 +14,7 @@
     </a>
   </div>
 
+  {% cache 300 menu_items page_obj.number %}
   <!-- گرید آیتم‌ها -->
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
     {% for item in item_list %}
@@ -49,6 +54,7 @@
     </div>
     {% endfor %}
   </div>
+  {% endcache %}
 
   <!-- Pagination با Tailwind -->
   {% if is_paginated %}

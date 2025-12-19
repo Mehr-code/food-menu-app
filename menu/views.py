@@ -23,8 +23,8 @@ def index(req):
     return render(req, "menu/index.html", context)
 
 
-@method_decorator(cache_page(60 * 5), name="dispatch")
-@method_decorator(vary_on_headers("User-Agent"), name="dispatch")
+# @method_decorator(cache_page(60 * 5), name="dispatch")
+# @method_decorator(vary_on_headers("User-Agent"), name="dispatch")
 class IndexClassView(ListView):
     model = Item
     template_name = "menu/index.html"
